@@ -291,22 +291,17 @@
             var servicePattern =  '"extension":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
             var serviceMatches = prettyJsonText.match(new RegExp(servicePattern, 'gi'));
 
-            var totalNetValue = 0;
 
 
             //Converting String to Numeric
-            if (netValuePattern) {
-                if (typeof netValuePattern === "string") {
-                    netValuePattern = netValuePattern.split(",").map(item => item.trim());
-                }
+            var netValueRegex = /"net":\s*{[\s\S]*?"value":\s*"?(?:([0-9.]+))"?/g;
+            var totalNetValue = 0;
+            var match;
             
-                if (Array.isArray(netValuePattern)) {
-                    totalNetValue = netValuePattern.reduce((sum, value) => {
-                        let numericValue = parseFloat(value);
-                        return sum + (isNaN(numericValue) ? 0 : numericValue);
-                    }, 0);
-                } else {
-                    console.error("netValuePattern is not an array:", netValuePattern);
+            while ((match = netValueRegex.exec(prettyJsonText)) !== null) {
+                var value = parseFloat(match[1]);
+                if (!isNaN(value)) {
+                    totalNetValue += value;
                 }
             }
             var serviceResults = previousResults;
