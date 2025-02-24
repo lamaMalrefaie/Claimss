@@ -328,7 +328,9 @@
                     var payerShareMatch = currentMatch.match(new RegExp(payerSharePattern, 'i'));
 
 
-                    var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
+                    //var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
+                    var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'
+                        + '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
 
                     var codeMatches = currentMatch.match(new RegExp(codePattern, 'gi'));
                     var nphiesCode = codeMatches && codeMatches[0] ? codeMatches[0].match(/"code":\s*"([^"]+)"/)[1] : 'Not found';
