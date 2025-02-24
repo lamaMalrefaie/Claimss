@@ -293,9 +293,13 @@
             //var servicePattern =  '"item":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?}|'+ '"productOrService":\\s*{[\\s\\S]+?}';
             var servicePattern =  '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]+?},|'
                 + '"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
-
+            
             var serviceMatches = prettyJsonText.match(new RegExp(servicePattern, 'gi'));
 
+            var patientInvoicePattern = '"url":\\s*"[^"]*extension-patientInvoice"[\\s\\S]*?"valueIdentifier":\\s*{[\\s\\S]*?"value":\\s*"([^"]+)"';
+            var extensionTaxPattern = '"url":\\s*"[^"]*extension-tax"[\\s\\S]*?"valueMoney":\\s*{\\s*"value":\\s*([\\d.]+)';
+            var patientSharePattern = '"url":\\s*"[^"]*extension-patient-share"[\\s\\S]*?"valueMoney":\\s*{\\s*"value":\\s*([\\d.]+)';
+            var payerSharePattern = '"url":\\s*"[^"]*extension-payer-share"[\\s\\S]*?"valueMoney":\\s*{\\s*"value":\\s*([\\d.]+)';
 
 
             //Converting String to Numeric
