@@ -361,39 +361,76 @@
                     serviceResults += 'Extension Tax: ' + (extensionTaxMatch ? copyButton(extensionTaxMatch[1]) : 'Not found') + '<br>';
                     serviceResults += 'Patient Share: ' + (patientShareMatch ? copyButton(patientShareMatch[1]) : 'Not found') + '<br>';
                     serviceResults += 'Payer Share: ' + (payerShareMatch ? copyButton(payerShareMatch[1]) : 'Not found') + '<br>';
-
+                    
+                
                     var displayPattern = '"display":\\s*"([^"]+)"';
-                    var nphiesCodePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
-                    var serviceCodePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]+?},\\s*{[\\s\\S]*?"code":\\s*"([^"]+)"';
+                    var nphiesCodePattern = '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'
+                                           + '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
+                    
+                    var serviceCodePattern = '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]+?},\\s*{[\\s\\S]*?"code":\\s*"([^"]+)"|'
+                                            + '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]+?},\\s*{[\\s\\S]*?"code":\\s*"([^"]+)"';
+                    
                     var servicedPeriodStartPattern = '"servicedPeriod":\\s*{[\\s\\S]*?"start":\\s*"([^"]+)"';
-
                     var quantityPattern = '"quantity":\\s*{\\s*"value":\\s*(\\d+)';
                     var servicedDatePattern = '"servicedDate":\\s*"([^"]+)"';
                     var unitPricePattern = '"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
                     var netValuePattern = '"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
-
+                    
                     var displayMatch = currentMatch.match(new RegExp(displayPattern, 'i'));
-                    var nphiesCodeMatch = currentMatch.match(new RegExp(nphiesCodePattern, 'i'));
-                    var serviceCodeMatch = currentMatch.match(new RegExp(serviceCodePattern, 'i'));
-
+                    var nphiesCodeMatch = currentMatch.match(new RegExp(nphiesCodePattern, 'gi'));
+                    var serviceCodeMatch = currentMatch.match(new RegExp(serviceCodePattern, 'gi'));
+                    
                     var quantityMatch = currentMatch.match(new RegExp(quantityPattern, 'i'));
                     var servicedDateMatch = currentMatch.match(new RegExp(servicedDatePattern, 'i'));
                     var servicedPeriodStartMatch = currentMatch.match(new RegExp(servicedPeriodStartPattern, 'i'));
                     var unitPriceMatch = currentMatch.match(new RegExp(unitPricePattern, 'i'));
                     var netValueMatch = currentMatch.match(new RegExp(netValuePattern, 'i'));
+                    
+                   
+                    var nphiesCode = 'Not found';
+                    var serviceCode = 'Not found';
+                    
+                    if (nphiesCodeMatch) {
+                        for (var j = 0; j < nphiesCodeMatch.length; j++) {
+                            var match = nphiesCodeMatch[j].match(/"code":\s*"([^"]+)"/);
+                            if (match) {
+                                if (j === 0) {
+                                    nphiesCode = match[1];
+                                } else {
+                                    serviceCode = match[1];
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                    if (displayMatch) {
+                        serviceResults += 'Name: ' + copyButton(displayMatch[1]) + '<br>';
+                    }
+                    if (nphiesCode !== 'Not found') {
+                        serviceResults += 'Nphies Code: ' + copyButton(nphiesCode) + '<br>';
+                    }
+                    if (serviceCode !== 'Not found') {
+                        serviceResults += 'Service Code: ' + copyButton(serviceCode) + '<br>';
+                    }
+                    if (servicedDateMatch) {
+                        serviceResults += 'Serviced Date: ' + copyButton(servicedDateMatch[1]) + '<br>';
+                    }
+                    if (servicedPeriodStartMatch) {
+                        serviceResults += 'Serviced Period Start: ' + copyButton(servicedPeriodStartMatch[1]) + '<br>';
+                    }
+                    if (quantityMatch) {
+                        serviceResults += 'Quantity: ' + quantityMatch[1] + '<br>';
+                    }
+                    if (unitPriceMatch) {
+                        serviceResults += 'Unit Price: ' + copyButton(unitPriceMatch[1]) + '<br>';
+                    }
+                    if (netValueMatch) {
+                        serviceResults += 'Net Value: ' + copyButton(netValueMatch[1]) + '<br>';
+                    }
+                    
+                    serviceResults += '<br>';
 
-
-                    var nphiesCode = nphiesCodeMatch ? nphiesCodeMatch[1] : 'Not found';
-                    var serviceCode = serviceCodeMatch ? serviceCodeMatch[1] : 'Not found';
-
-                    serviceResults += 'Name: ' + (displayMatch ? displayMatch[1] : 'Not found') + '<br>';
-                    serviceResults += 'Nphies Code: ' + (nphiesCode ? copyButton(nphiesCode) : 'Not found') + '<br>';
-                    serviceResults += 'Service Code: ' + (serviceCode ? copyButton(serviceCode) : 'Not found') + '<br>';
-                    serviceResults += 'Serviced Date: ' + (servicedDateMatch ? copyButton(servicedDateMatch[1]) : 'Not found') + '<br>';
-                    serviceResults += 'Serviced Period Start: ' + (servicedPeriodStartMatch ? copyButton(servicedPeriodStartMatch[1]) : 'Not found') + '<br>';
-                    serviceResults += 'Quantity: ' + (quantityMatch ? quantityMatch[1] : 'Not found') + '<br>';
-                    serviceResults += 'Unit Price: ' + (unitPriceMatch ? copyButton(unitPriceMatch[1]) : 'Not found') + '<br>';
-                    serviceResults += 'Net Value: ' + (netValueMatch ? copyButton(netValueMatch[1]) : 'Not found') + '<br><br>';
                 }
             }
 
