@@ -320,7 +320,7 @@
             if (serviceMatches && serviceMatches.length > 0) {
                 for (var i = 0; i < serviceMatches.length; i++) {
                     var currentMatch = serviceMatches[i];
-                    var patientInvoicePattern = '"url":\\s*"[^"]*extension-patientInvoice"[\\s\\S]*?"valueIdentifier":\\s*{[\\s\\S]*?"value":\\s*"([^"]+)"';
+             /*     var patientInvoicePattern = '"url":\\s*"[^"]*extension-patientInvoice"[\\s\\S]*?"valueIdentifier":\\s*{[\\s\\S]*?"value":\\s*"([^"]+)"';
                     var extensionTaxPattern = '"url":\\s*"[^"]*extension-tax"[\\s\\S]*?"valueMoney":\\s*{\\s*"value":\\s*([\\d.]+)';
                     var patientSharePattern = '"url":\\s*"[^"]*extension-patient-share"[\\s\\S]*?"valueMoney":\\s*{\\s*"value":\\s*([\\d.]+)';
                     var payerSharePattern = '"url":\\s*"[^"]*extension-payer-share"[\\s\\S]*?"valueMoney":\\s*{\\s*"value":\\s*([\\d.]+)';
@@ -329,6 +329,17 @@
                     var extensionTaxMatch = currentMatch.match(new RegExp(extensionTaxPattern, 'i'));
                     var patientShareMatch = currentMatch.match(new RegExp(patientSharePattern, 'i'));
                     var payerShareMatch = currentMatch.match(new RegExp(payerSharePattern, 'i'));
+*/
+                    var patientInvoiceMatch = prettyJsonText.match(new RegExp(patientInvoicePattern, 'gi'));
+                    var extensionTaxMatch = prettyJsonText.match(new RegExp(extensionTaxPattern, 'gi'));
+                    var patientShareMatch = prettyJsonText.match(new RegExp(patientSharePattern, 'gi'));
+                    var payerShareMatch = prettyJsonText.match(new RegExp(payerSharePattern, 'gi'));
+                    
+                    var patientInvoice = patientInvoiceMatch && patientInvoiceMatch[i] ? patientInvoiceMatch[i].match(/"value":\s*"([^"]+)"/)[1] : 'Not found';
+                    var extensionTax = extensionTaxMatch && extensionTaxMatch[i] ? extensionTaxMatch[i].match(/"value":\s*([\\d.]+)/)[1] : 'Not found';
+                    var patientShare = patientShareMatch && patientShareMatch[i] ? patientShareMatch[i].match(/"value":\s*([\\d.]+)/)[1] : 'Not found';
+                    var payerShare = payerShareMatch && payerShareMatch[i] ? payerShareMatch[i].match(/"value":\s*([\\d.]+)/)[1] : 'Not found';
+                    
 
 
                     //var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
