@@ -293,11 +293,21 @@
 
             var totalNetValue = 0;
 
+
+            //Converting String to Numeric
             if (netValuePattern) {
-                totalNetValue = netValuePattern.reduce((sum, value) => {
-                    let numericValue = parseFloat(value); 
-                    return sum + (isNaN(numericValue) ? 0 : numericValue); 
-                }, 0);
+                if (typeof netValuePattern === "string") {
+                    netValuePattern = netValuePattern.split(",").map(item => item.trim());
+                }
+            
+                if (Array.isArray(netValuePattern)) {
+                    totalNetValue = netValuePattern.reduce((sum, value) => {
+                        let numericValue = parseFloat(value);
+                        return sum + (isNaN(numericValue) ? 0 : numericValue);
+                    }, 0);
+                } else {
+                    console.error("netValuePattern is not an array:", netValuePattern);
+                }
             }
             var serviceResults = previousResults;
             var serviceCount = serviceMatches ? serviceMatches.length : 0;
