@@ -343,7 +343,8 @@
                     var payerShareMatch = prettyJsonText.match(new RegExp(payerSharePattern, 'gi'));
 */
 
-                    var patientInvoiceMatches = [...prettyJsonText.matchAll(new RegExp(patientInvoicePattern, 'gi'))];
+                    //var patientInvoiceMatches = [...prettyJsonText.matchAll(new RegExp(patientInvoicePattern, 'gi'))];
+                    var patientInvoiceMatches = Array.from(prettyJsonText.matchAll(new RegExp(patientInvoicePattern, 'gi')));
                     var extensionTaxMatches = [...prettyJsonText.matchAll(new RegExp(extensionTaxPattern, 'gi'))];
                     var patientShareMatches = [...prettyJsonText.matchAll(new RegExp(patientSharePattern, 'gi'))];
                     var payerShareMatches = [...prettyJsonText.matchAll(new RegExp(payerSharePattern, 'gi'))];
