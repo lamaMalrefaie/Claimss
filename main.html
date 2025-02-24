@@ -336,12 +336,23 @@
                     var extensionTaxMatch = currentMatch.match(new RegExp(extensionTaxPattern, 'i'));
                     var patientShareMatch = currentMatch.match(new RegExp(patientSharePattern, 'i'));
                     var payerShareMatch = currentMatch.match(new RegExp(payerSharePattern, 'i'));
-*/
+
                     var patientInvoiceMatch = prettyJsonText.match(new RegExp(patientInvoicePattern, 'gi'));
                     var extensionTaxMatch = prettyJsonText.match(new RegExp(extensionTaxPattern, 'gi'));
                     var patientShareMatch = prettyJsonText.match(new RegExp(patientSharePattern, 'gi'));
                     var payerShareMatch = prettyJsonText.match(new RegExp(payerSharePattern, 'gi'));
+*/
+
+                    var patientInvoiceMatches = [...prettyJsonText.matchAll(new RegExp(patientInvoicePattern, 'gi'))];
+                    var extensionTaxMatches = [...prettyJsonText.matchAll(new RegExp(extensionTaxPattern, 'gi'))];
+                    var patientShareMatches = [...prettyJsonText.matchAll(new RegExp(patientSharePattern, 'gi'))];
+                    var payerShareMatches = [...prettyJsonText.matchAll(new RegExp(payerSharePattern, 'gi'))];
                     
+                    var patientInvoice = (patientInvoiceMatches.length > i) ? patientInvoiceMatches[i][1] : 'Not found';
+                    var extensionTax = (extensionTaxMatches.length > i) ? extensionTaxMatches[i][1] : 'Not found';
+                    var patientShare = (patientShareMatches.length > i) ? patientShareMatches[i][1] : 'Not found';
+                    var payerShare = (payerShareMatches.length > i) ? payerShareMatches[i][1] : 'Not found';
+
                     /* ERROR
                     var patientInvoice = patientInvoiceMatch && patientInvoiceMatch[i] ? patientInvoiceMatch[i].match(/"value":\s*"([^"]+)"/)[1] : 'Not found';
                     var extensionTax = extensionTaxMatch && extensionTaxMatch[i] ? extensionTaxMatch[i].match(/"value":\s*([\\d.]+)/)[1] : 'Not found';
