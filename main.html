@@ -288,18 +288,9 @@
         }
 
         function processProductOrService(prettyJsonText, previousResults = '') {
-            //var servicePattern =  '"extension":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
-            //var servicePattern =  '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'+ '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
-            //var servicePattern =  '"item":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?}|'+ '"productOrService":\\s*{[\\s\\S]+?}';
-            var servicePattern =  '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]+?},|'
-                + '"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
-            
+            var servicePattern =  '"extension":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
             var serviceMatches = prettyJsonText.match(new RegExp(servicePattern, 'gi'));
 
-            var patientInvoicePattern = '"url":\\s*"[^"]*extension-patientInvoice"[\\s\\S]*?"valueIdentifier":\\s*{[\\s\\S]*?"value":\\s*"([^"]+)"';
-            var extensionTaxPattern = '"url":\\s*"[^"]*extension-tax"[\\s\\S]*?"valueMoney":\\s*{\\s*"value":\\s*([\\d.]+)';
-            var patientSharePattern = '"url":\\s*"[^"]*extension-patient-share"[\\s\\S]*?"valueMoney":\\s*{\\s*"value":\\s*([\\d.]+)';
-            var payerSharePattern = '"url":\\s*"[^"]*extension-payer-share"[\\s\\S]*?"valueMoney":\\s*{\\s*"value":\\s*([\\d.]+)';
 
 
             //Converting String to Numeric
@@ -323,7 +314,6 @@
             serviceResults += 'Total Net Value: ' + totalNetValue.toFixed(2);
             serviceResults += '</div><br>';
             serviceResults += '-----------------------------------------------------------------------------------<br>';
-            //if (serviceMatches && serviceMatches.length > 0) {
             if (serviceMatches) {
                 for (var i = 0; i < serviceMatches.length; i++) {
                     var currentMatch = serviceMatches[i];
@@ -426,3 +416,4 @@
     </script>
 </body>
 </html>
+
