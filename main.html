@@ -289,8 +289,9 @@
 
         function processProductOrService(prettyJsonText, previousResults = '') {
             //var servicePattern =  '"extension":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
-            var servicePattern =  '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'
-                    + '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
+            //var servicePattern =  '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'+ '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
+            var servicePattern =  '"item":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?}|'+ '"productOrService":\\s*{[\\s\\S]+?}';
+
             var serviceMatches = prettyJsonText.match(new RegExp(servicePattern, 'gi'));
 
 
@@ -331,8 +332,8 @@
 
 
                     //var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
-                    var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'
-                        + '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
+                    //var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'+ '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
+                    var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
 
                     //var codeMatches = currentMatch.match(new RegExp(codePattern, 'gi'));
                     //var nphiesCode = codeMatches && codeMatches[0] ? codeMatches[0].match(/"code":\s*"([^"]+)"/)[1] : 'Not found';
