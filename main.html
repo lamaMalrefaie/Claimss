@@ -290,7 +290,9 @@
         function processProductOrService(prettyJsonText, previousResults = '') {
             //var servicePattern =  '"extension":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
             //var servicePattern =  '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'+ '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
-            var servicePattern =  '"item":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?}|'+ '"productOrService":\\s*{[\\s\\S]+?}';
+            //var servicePattern =  '"item":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?}|'+ '"productOrService":\\s*{[\\s\\S]+?}';
+            var servicePattern =  '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]+?},|'
+                + '"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
 
             var serviceMatches = prettyJsonText.match(new RegExp(servicePattern, 'gi'));
 
@@ -318,6 +320,7 @@
             serviceResults += '</div><br>';
             serviceResults += '-----------------------------------------------------------------------------------<br>';
             if (serviceMatches && serviceMatches.length > 0) {
+                serviceResults += '<div style="font-weight: bold; font-size: 24px; margin-bottom: 20px;">Total Services Found: ' + serviceMatches.length + '</div>';
                 for (var i = 0; i < serviceMatches.length; i++) {
                     var currentMatch = serviceMatches[i];
              /*     var patientInvoicePattern = '"url":\\s*"[^"]*extension-patientInvoice"[\\s\\S]*?"valueIdentifier":\\s*{[\\s\\S]*?"value":\\s*"([^"]+)"';
@@ -371,12 +374,17 @@
 
                     serviceResults += '-----------------------------------------------------------------------------------<br>';
                     serviceResults += '<br>Product/Service :' + (i + 1) + ' <br>';
-                    serviceResults += '<br>Patient Invoice: ' + (patientInvoiceMatch ? copyButton(patientInvoiceMatch[1]) : 'Not found') + '<br>';
-                    serviceResults += 'Extension Tax: ' + (extensionTaxMatch ? copyButton(extensionTaxMatch[1]) : 'Not found') + '<br>';
-                    serviceResults += 'Patient Share: ' + (patientShareMatch ? copyButton(patientShareMatch[1]) : 'Not found') + '<br>';
-                    serviceResults += 'Payer Share: ' + (payerShareMatch ? copyButton(payerShareMatch[1]) : 'Not found') + '<br>';
-                    
-                
+                    //serviceResults += '<br>Patient Invoice: ' + (patientInvoiceMatch ? copyButton(patientInvoiceMatch[1]) : 'Not found') + '<br>';
+                    //serviceResults += 'Extension Tax: ' + (extensionTaxMatch ? copyButton(extensionTaxMatch[1]) : 'Not found') + '<br>';
+                    //serviceResults += 'Patient Share: ' + (patientShareMatch ? copyButton(patientShareMatch[1]) : 'Not found') + '<br>';
+                    //serviceResults += 'Payer Share: ' + (payerShareMatch ? copyButton(payerShareMatch[1]) : 'Not found') + '<br>';
+
+
+                    serviceResults += 'Patient Invoice: ' + (patientInvoice !== 'Not found' ? copyButton(patientInvoice) : 'Not found') + '<br>';
+                    serviceResults += 'Extension Tax: ' + (extensionTax !== 'Not found' ? copyButton(extensionTax) : 'Not found') + '<br>';
+                    serviceResults += 'Patient Share: ' + (patientShare !== 'Not found' ? copyButton(patientShare) : 'Not found') + '<br>';
+                    serviceResults += 'Payer Share: ' + (payerShare !== 'Not found' ? copyButton(payerShare) : 'Not found') + '<br>';
+
                     var displayPattern = '"display":\\s*"([^"]+)"';
                     var nphiesCodePattern = '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'
                                            + '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
