@@ -288,7 +288,9 @@
         }
 
         function processProductOrService(prettyJsonText, previousResults = '') {
-            var servicePattern =  '"extension":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
+            //var servicePattern =  '"extension":\\s*\\[[\\s\\S]+?"productOrService":\\s*{[\\s\\S]+?},[\\s\\S]*?"quantity":\\s*{\\s*"value":\\s*(\\d+),[\\s\\S]*?"unitPrice":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)[\\s\\S]*?"net":\\s*{[\\s\\S]*?"value":\\s*([\\d.]+)';
+            var servicePattern =  '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'
+                    + '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
             var serviceMatches = prettyJsonText.match(new RegExp(servicePattern, 'gi'));
 
 
@@ -314,7 +316,7 @@
             serviceResults += 'Total Net Value: ' + totalNetValue.toFixed(2);
             serviceResults += '</div><br>';
             serviceResults += '-----------------------------------------------------------------------------------<br>';
-            if (serviceMatches) {
+            if (serviceMatches && serviceMatches.length > 0) {
                 for (var i = 0; i < serviceMatches.length; i++) {
                     var currentMatch = serviceMatches[i];
                     var patientInvoicePattern = '"url":\\s*"[^"]*extension-patientInvoice"[\\s\\S]*?"valueIdentifier":\\s*{[\\s\\S]*?"value":\\s*"([^"]+)"';
