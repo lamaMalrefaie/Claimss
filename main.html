@@ -342,11 +342,17 @@
                     var patientShareMatch = prettyJsonText.match(new RegExp(patientSharePattern, 'gi'));
                     var payerShareMatch = prettyJsonText.match(new RegExp(payerSharePattern, 'gi'));
                     
+                    /* ERROR
                     var patientInvoice = patientInvoiceMatch && patientInvoiceMatch[i] ? patientInvoiceMatch[i].match(/"value":\s*"([^"]+)"/)[1] : 'Not found';
                     var extensionTax = extensionTaxMatch && extensionTaxMatch[i] ? extensionTaxMatch[i].match(/"value":\s*([\\d.]+)/)[1] : 'Not found';
                     var patientShare = patientShareMatch && patientShareMatch[i] ? patientShareMatch[i].match(/"value":\s*([\\d.]+)/)[1] : 'Not found';
                     var payerShare = payerShareMatch && payerShareMatch[i] ? payerShareMatch[i].match(/"value":\s*([\\d.]+)/)[1] : 'Not found';
-                    
+                    */
+                    var patientInvoice = (patientInvoiceMatch && patientInvoiceMatch[i]) ? (patientInvoiceMatch[i].match(/"value":\s*"([^"]+)"/) || [])[1] || 'Not found' : 'Not found';
+                    var extensionTax = (extensionTaxMatch && extensionTaxMatch[i]) ? (extensionTaxMatch[i].match(/"value":\s*([\\d.]+)/) || [])[1] || 'Not found' : 'Not found';
+                    var patientShare = (patientShareMatch && patientShareMatch[i]) ? (patientShareMatch[i].match(/"value":\s*([\\d.]+)/) || [])[1] || 'Not found' : 'Not found';
+                    var payerShare = (payerShareMatch && payerShareMatch[i]) ? (payerShareMatch[i].match(/"value":\s*([\\d.]+)/) || [])[1] || 'Not found' : 'Not found';
+
 
 
                     //var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
