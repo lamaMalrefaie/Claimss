@@ -293,10 +293,14 @@
 
             var serviceResults = previousResults;
             var serviceCount = serviceMatches ? serviceMatches.length : 0;
+            var NetvalueCount = netValuePattern ? netValuePattern.length : 0;
             serviceResults += '-----------------------------------------------------------------------------------<br>';
             serviceResults += '-----------------------------------------------------------------------------------<br>';
             serviceResults += '<div style="font-weight: bold; font-size: 24px; margin-bottom: 20px;">';
             serviceResults += 'Total Product/Service Count: ' + serviceCount;
+            serviceResults += '</div><br>';
+            serviceResults += '<div style="font-weight: bold; font-size: 24px; margin-bottom: 20px;">';
+            serviceResults += 'Total Net Value Count: ' + NetvalueCount;
             serviceResults += '</div><br>';
             if (serviceMatches) {
                 for (var i = 0; i < serviceMatches.length; i++) {
