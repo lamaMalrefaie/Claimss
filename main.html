@@ -332,9 +332,27 @@
                     var codePattern = '"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"|'
                         + '"item":\\s*\\[[\\s\\S]*?"productOrService":\\s*{[\\s\\S]*?"coding":\\s*\\[[\\s\\S]*?"code":\\s*"([^"]+)"';
 
+                    //var codeMatches = currentMatch.match(new RegExp(codePattern, 'gi'));
+                    //var nphiesCode = codeMatches && codeMatches[0] ? codeMatches[0].match(/"code":\s*"([^"]+)"/)[1] : 'Not found';
+                    //var serviceCode = codeMatches && codeMatches[1] ? codeMatches[1].match(/"code":\s*"([^"]+)"/)[1] : 'Not found';
+
                     var codeMatches = currentMatch.match(new RegExp(codePattern, 'gi'));
-                    var nphiesCode = codeMatches && codeMatches[0] ? codeMatches[0].match(/"code":\s*"([^"]+)"/)[1] : 'Not found';
-                    var serviceCode = codeMatches && codeMatches[1] ? codeMatches[1].match(/"code":\s*"([^"]+)"/)[1] : 'Not found';
+                    var nphiesCode = 'Not found';
+                    var serviceCode = 'Not found';
+                    
+                    if (codeMatches) {
+                        for (var j = 0; j < codeMatches.length; j++) {
+                            var match = codeMatches[j].match(/"code":\s*"([^"]+)"/);
+                            if (match) {
+                                if (j === 0) {
+                                    nphiesCode = match[1];
+                                } else {
+                                    serviceCode = match[1];
+                                }
+                            }
+                        }
+                    }
+
 
 
                     serviceResults += '-----------------------------------------------------------------------------------<br>';
